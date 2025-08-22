@@ -5,17 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/7.css">
     <title>Quiz Game</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="screen active" id="start-screen">
+    <div class="container window" id="main-container">
+        <div class="title-bar">
+            <div class="title-bar-text">Quiz Time!</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize" onclick=maximize()></button>
+                <!-- <button aria-label="Restore" onclick=maximize()></button> -->
+                <button aria-label="Close" onclick=closeWindow()></button>
+            </div>
+        </div>
+        <div class="screen window-body active" id="start-screen">
             <h1>Quiz Time!</h1>
             <p>Test your knowledge</p>
-            <button id="start-btn" >Start Quiz</button>
+            <button id="start-btn">Start Quiz</button>
         </div>
-        <div class="screen " id="quiz-screen">
+        <div class="screen window-body" id="quiz-screen">
             <div class="quiz-header">
                 <h2 id="question-text">
                     Enter question here
@@ -33,14 +43,14 @@
             <div id="answers-container" class="answers-container">
                 <!-- answer buttons here from js code -->
             </div>
-            <div class="progress-bar">
+            <div class="progress-bar" role="progressbar">
                 <div id="progress" class="progress">
 
                 </div>
             </div>
         </div>
 
-        <div class="screen" id="result-screen" class="sceen">
+        <div class="screen window-body" id="result-screen">
             <h1>Quiz Results</h1>
             <div class="result-info">
                 <p>

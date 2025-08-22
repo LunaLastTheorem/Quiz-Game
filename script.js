@@ -12,6 +12,9 @@ const maxScoreSpan = document.getElementById("max-score");
 const resultMessage = document.getElementById("result-message");
 const restartButton = document.getElementById("restart-btn");
 const progressBar = document.getElementById("progress");
+const container = document.getElementById("main-container");
+
+let maximized = false;
 
 const quizQuestions = [
     {
@@ -76,8 +79,8 @@ function startQuiz() {
     score = 0;
     scoreSpan.textContent = score;
 
-    startScreen.classList.remove("active");
-    quizScreen.classList.add("active")
+    startScreen.classList.remove(maximized ? "maximized-active" : "active");
+    quizScreen.classList.add(maximized ? "maximized-active" : "active")
 
     showQuestion()
 }
@@ -131,7 +134,7 @@ function selectAnswer(event) {
         if (button.dataset.correct === "true") {
             button.classList.add("correct")
         }
-        else if(button === selectedButton){
+        else if (button === selectedButton) {
             button.classList.add("incorrect")
         }
     })
@@ -148,8 +151,10 @@ function selectAnswer(event) {
 }
 
 function showResults() {
-    quizScreen.classList.remove("active");
-    resultScreen.classList.add("active");
+    quizScreen.classList.remove(maximized ? "maximized-active" : "active");
+    resultScreen.classList.add(maximized ? "maximized-active" : "active");
+    
+    resultMessage.classList = ""
 
     finalScoreSpan.textContent = score;
 
@@ -157,13 +162,39 @@ function showResults() {
 
     if (percentage === 100) {
         resultMessage.textContent = "Perfect! You're a genius!";
+        resultMessage.classList.add("good")
     } else if (percentage >= 80) {
         resultMessage.textContent = "Great job! You know your stuff!";
+        resultMessage.classList.add("good")
     } else if (percentage >= 60) {
         resultMessage.textContent = "Good effort! Keep learning!";
+        resultMessage.classList.add("medium")
     } else if (percentage >= 40) {
         resultMessage.textContent = "Not bad! Try again to improve!";
+        resultMessage.classList.add("almost-bad")
     } else {
         resultMessage.textContent = "Keep studying! You'll get better!";
+        resultMessage.classList.add("bad")
     }
+}
+
+function maximize() {
+    if(maximized){
+        document.querySelectorAll('.maximized-active').forEach(function(screen){
+            screen.classList.remove("maximized-active")
+            screen.classList.add("active")
+        })
+    }else{
+        document.querySelectorAll('.active').forEach(function(screen){
+            screen.classList.remove("active")
+            screen.classList.add("maximized-active")
+        })
+        container.classList.add("maximized-active")
+    }
+
+    maximized = !maximized
+}
+
+function closeWindow() {
+    container.classList.add("screen")
 }
