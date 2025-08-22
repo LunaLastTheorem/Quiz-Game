@@ -79,14 +79,14 @@ function startQuiz() {
     score = 0;
     scoreSpan.textContent = score;
 
-    startScreen.classList.remove(maximized ? "maximized-active" : "active");
-    quizScreen.classList.add(maximized ? "maximized-active" : "active")
+    startScreen.classList.remove("maximized-active", "active");
+    setScreenActive(quizScreen)
 
     showQuestion()
 }
 
 function restartQuiz() {
-    resultScreen.classList.remove("active")
+    resultScreen.classList.remove("active", "maximized-active")
     startQuiz()
 }
 
@@ -151,8 +151,8 @@ function selectAnswer(event) {
 }
 
 function showResults() {
-    quizScreen.classList.remove(maximized ? "maximized-active" : "active");
-    resultScreen.classList.add(maximized ? "maximized-active" : "active");
+    quizScreen.classList.remove("maximized-active", "active");
+    setScreenActive(resultScreen)
     
     resultMessage.classList = ""
 
@@ -179,22 +179,18 @@ function showResults() {
 }
 
 function maximize() {
-    if(maximized){
-        document.querySelectorAll('.maximized-active').forEach(function(screen){
-            screen.classList.remove("maximized-active")
-            screen.classList.add("active")
-        })
-    }else{
-        document.querySelectorAll('.active').forEach(function(screen){
-            screen.classList.remove("active")
-            screen.classList.add("maximized-active")
-        })
-        container.classList.add("maximized-active")
-    }
-
     maximized = !maximized
+    
+    document.querySelectorAll('.active, .maximized-active').forEach(setScreenActive)
+    
+    setScreenActive(container)
 }
 
 function closeWindow() {
     container.classList.add("screen")
+}
+
+function setScreenActive(screen){
+    screen.classList.remove("active", "maximized-active")
+    screen.classList.add(maximized ? "maximized-active" : "active")
 }
